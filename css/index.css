@@ -26,7 +26,7 @@
   color: blue;
   border-bottom: 1px solid currentColor;
 }
- 
+
 .text-white-link {
   color: white;
   border-bottom: 1px solid currentColor;
@@ -138,7 +138,7 @@ a.text-white-link:active {
 	flex-wrap: wrap;
 }
 
-/* 	Add border to the images on the "Fun Stuff" section 
+/* 	Add border to the images on the "Fun Stuff" section
 		https://www.w3schools.com/csS/css3_images.asp
 */
 .images-border {
