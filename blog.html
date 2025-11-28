@@ -1,0 +1,40 @@
+---
+layout: default
+title: Blog
+---
+
+<section class="page-header">
+    <div class="container">
+        <h1>Blog</h1>
+        <p>Thoughts, tutorials, and insights</p>
+    </div>
+</section>
+
+<section class="blog-page">
+    <div class="container">
+        <div class="blog-grid">
+            {% for post in site.posts %}
+            <article class="blog-card">
+                <div class="blog-meta">
+                    <time datetime="{{ post.date | date_to_xmlschema }}">
+                        {{ post.date | date: "%B %d, %Y" }}
+                    </time>
+                </div>
+                <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+                <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                <a href="{{ post.url | relative_url }}" class="read-more">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+            {% endfor %}
+        </div>
+        
+        {% if site.posts.size == 0 %}
+        <div class="empty-state">
+            <i class="fas fa-pencil-alt"></i>
+            <h3>No posts yet</h3>
+            <p>Check back soon for new content!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>

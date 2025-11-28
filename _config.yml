@@ -1,0 +1,49 @@
+# Site settings
+title: Shubham Shandilya
+email: shubhamkrshandilya@gmail.com
+description: >-
+  Portfolio of Shubham Kumar - Software Development Engineer 2 @ Amazon OpenSearch Service, Patent Holder (2 Patents),
+  NIT Patna Graduate. Specializing in Security Domain, Android RIL/Telephony, AI/ML, and Computer Vision.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://shubhamkrshandilya.github.io" # your site url
+twitter_username: shubhamisg8
+github_username: shubhamkrshandilya
+linkedin_username: shubhamkrshandilya
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
