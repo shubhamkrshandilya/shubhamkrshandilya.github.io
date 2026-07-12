@@ -351,10 +351,18 @@ const blogDayNightSketch = (p) => {
         p.vertex(canvasW, canvasH);
         p.endShape(p.CLOSE);
         
-        drawPineTree(60, canvasH - 85, 20, 36, ambient);
-        drawPineTree(340, canvasH - 90, 22, 40, ambient);
-        drawBroadTree(150, canvasH - 75, 24, 42, ambient);
-        drawSceneryCabin(220, canvasH - 85, ambient);
+        drawPineTree(60, getBackHillHeight(60), 20, 36, ambient);
+        drawPineTree(340, getBackHillHeight(340), 22, 40, ambient);
+        drawBroadTree(150, getFrontHillHeight(150), 24, 42, ambient);
+        drawSceneryCabin(220, getFrontHillHeight(238) - 24, ambient);
+    }
+    
+    function getBackHillHeight(x) {
+        return canvasH - 100 + p.sin(x * 0.01) * 28 + p.cos(x * 0.005) * 12;
+    }
+    
+    function getFrontHillHeight(x) {
+        return canvasH - 70 + p.cos(x * 0.015) * 18 + p.sin(x * 0.008) * 10;
     }
     
     function drawPineTree(x, y, w, h, ambient) {
