@@ -8,7 +8,7 @@ section: "Mechanics Branch"
 division: "Applied Physics"
 author: "Shubham Kumar"
 volume: "I"
-issue: "3"
+issue: "4"
 date: 2026-07-12
 tags: [Physics, Kinematics, Projectile Motion, p5.js, Education]
 weather: "Dry dust storms in Jezero Crater"
