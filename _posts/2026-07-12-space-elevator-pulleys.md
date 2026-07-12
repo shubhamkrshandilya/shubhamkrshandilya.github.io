@@ -9,7 +9,7 @@ division: "Applied Physics"
 author: "Shubham Kumar"
 volume: "I"
 issue: "5"
-date: 2026-07-14
+date: 2026-07-12 08:00:00 +0530
 tags: [Physics, Connected Bodies, Pulleys, Tension, p5.js, Education]
 weather: "Calm solar winds over orbit bay 7"
 ticker_index: "Ideal strings: Massless & Inextensible | a = g(m2-m1)/(m1+m2)"
@@ -309,11 +309,16 @@ const pulleySketch = (p) => {
         p.fill(textDark);
         p.ellipse(pulleyX, pulleyY, 6, 6);
         
+        let m1Val = m1Slider ? parseFloat(m1Slider.value) : 15;
+        let m2Val = m2Slider ? parseFloat(m2Slider.value) : 30;
+        let s1 = p.map(m1Val, 5, 50, 20, 45);
+        let s2 = p.map(m2Val, 5, 50, 20, 45);
+        
         p.stroke(textDark);
         p.strokeWeight(1.5);
         
-        p.line(pulleyX - pulleyRadius, pulleyY, pulleyX - pulleyRadius, y1 - 20);
-        p.line(pulleyX + pulleyRadius, pulleyY, pulleyX + pulleyRadius, y2 - 20);
+        p.line(pulleyX - pulleyRadius, pulleyY, pulleyX - pulleyRadius, y1 - s1 / 2);
+        p.line(pulleyX + pulleyRadius, pulleyY, pulleyX + pulleyRadius, y2 - s2 / 2);
     }
     
     function drawBlocksWithFBD() {

@@ -9,7 +9,7 @@ division: "Applied Physics"
 author: "Shubham Kumar"
 volume: "I"
 issue: "4"
-date: 2026-07-12
+date: 2026-07-12 09:00:00 +0530
 tags: [Physics, Kinematics, Projectile Motion, p5.js, Education]
 weather: "Dry dust storms in Jezero Crater"
 ticker_index: "Mars gravity = 3.71 m/s² | Cargo target: Hermes Spacecraft"

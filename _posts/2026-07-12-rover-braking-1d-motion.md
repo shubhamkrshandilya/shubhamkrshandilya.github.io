@@ -9,7 +9,7 @@ division: "Applied Physics"
 author: "Shubham Kumar"
 volume: "I"
 issue: "3"
-date: 2026-07-13
+date: 2026-07-12 10:00:00 +0530
 tags: [Physics, Kinematics, 1D Motion, Graphs, p5.js, Education]
 weather: "Windy dust storm warnings over Aeolis Mons"
 ticker_index: "Transmission latency = 1.2s | Deceleration rate = a m/s²"
