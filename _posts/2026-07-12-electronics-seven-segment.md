@@ -212,26 +212,26 @@ const blogDigitalSketch = (p) => {
         
         let thickness = 8;
         
-        let xStart = 20;
+        let xStart = 15;
         let yStart = canvasH / 2 - 45;
-        let digitScale = 42;
-        let spacing = 52;
+        let digitScale = 38;
+        let spacing = 58;
         
         draw7SegmentDigit(xStart, yStart, hrStr[0], digitScale, thickness, glow);
         draw7SegmentDigit(xStart + spacing, yStart, hrStr[1], digitScale, thickness, glow);
-        drawBlinkingColon(xStart + spacing * 2 + 8, yStart, sec, ms, glow);
+        drawBlinkingColon(xStart + spacing * 2 + 10, yStart, sec, ms, glow);
         
         let xMin = xStart + spacing * 2 + 24;
         draw7SegmentDigit(xMin, yStart, minStr[0], digitScale, thickness, glow);
         draw7SegmentDigit(xMin + spacing, yStart, minStr[1], digitScale, thickness, glow);
-        drawBlinkingColon(xMin + spacing * 2 + 8, yStart, sec, ms, glow);
+        drawBlinkingColon(xMin + spacing * 2 + 10, yStart, sec, ms, glow);
         
         let xSec = xMin + spacing * 2 + 24;
         draw7SegmentDigit(xSec, yStart, secStr[0], digitScale, thickness, glow);
         draw7SegmentDigit(xSec + spacing, yStart, secStr[1], digitScale, thickness, glow);
         
         if (currentFormat === '12h') {
-            drawAmPmIndicators(xSec + spacing * 2 + 10, yStart, isPm, thickness, glow);
+            drawAmPmIndicators(xSec + spacing + 45, yStart, isPm, thickness, glow);
         }
         
         drawCalendarStrip(timeObj);
