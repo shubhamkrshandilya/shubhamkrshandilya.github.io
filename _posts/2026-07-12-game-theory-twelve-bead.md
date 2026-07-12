@@ -358,8 +358,12 @@ const blogGutiSketch = (p) => {
         let nT = nodes[to];
         let rD = nT.r - nF.r;
         let cD = nT.c - nF.c;
-        if (p.abs(rD) === 2 || p.abs(cD) === 2) {
-            if (p.abs(rD) === 1 || p.abs(cD) === 1) return null;
+        
+        // Enforce straight leaps of exactly 2 steps distance
+        if ((p.abs(rD) === 2 && cD === 0) || 
+            (p.abs(cD) === 2 && rD === 0) || 
+            (p.abs(rD) === 2 && p.abs(cD) === 2)) {
+            
             let mR = nF.r + rD / 2;
             let mC = nF.c + cD / 2;
             let mid = mR * 5 + mC;
@@ -471,8 +475,12 @@ const blogGutiSketch = (p) => {
         let nT = nodes[to];
         let rD = nT.r - nF.r;
         let cD = nT.c - nF.c;
-        if (p.abs(rD) === 2 || p.abs(cD) === 2) {
-            if (p.abs(rD) === 1 || p.abs(cD) === 1) return null;
+        
+        // Enforce straight leaps of exactly 2 steps distance
+        if ((p.abs(rD) === 2 && cD === 0) || 
+            (p.abs(cD) === 2 && rD === 0) || 
+            (p.abs(rD) === 2 && p.abs(cD) === 2)) {
+            
             let mR = nF.r + rD / 2;
             let mC = nF.c + cD / 2;
             let mid = mR * 5 + mC;
