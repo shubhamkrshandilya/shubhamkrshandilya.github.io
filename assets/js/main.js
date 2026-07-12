@@ -8,6 +8,41 @@ document.addEventListener('DOMContentLoaded', function() {
             navMenu.classList.toggle('active');
         });
     }
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (themeToggleBtn) {
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-theme');
+            const icon = themeToggleBtn.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        themeToggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            
+            let theme = 'dark';
+            if (document.body.classList.contains('light-theme')) {
+                theme = 'light';
+            }
+            localStorage.setItem('theme', theme);
+            
+            const icon = themeToggleBtn.querySelector('i');
+            if (icon) {
+                if (theme === 'light') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            }
+        });
+    }
     
     // Close mobile menu when clicking on a link
     const navLinks = document.querySelectorAll('.nav-link');

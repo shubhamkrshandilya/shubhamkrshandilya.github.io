@@ -3,38 +3,153 @@ layout: default
 title: Blog
 ---
 
-<section class="page-header">
+<section class="blog-hero">
     <div class="container">
-        <h1>Blog</h1>
-        <p>Thoughts, tutorials, and insights</p>
+        <span class="hero-badge"><i class="fas fa-feather-alt"></i> Creative Corner</span>
+        <h1>The Developer Posts</h1>
+        <p>Where distributed databases meet ancient epics and wizarding magic.</p>
+        
+        <div class="search-bar-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="blogSearch" placeholder="Search articles, tags, concepts...">
+        </div>
     </div>
 </section>
 
-<section class="blog-page">
+<section class="blog-filters-section">
     <div class="container">
-        <div class="blog-grid">
+        <div class="filter-wrapper">
+            <button class="filter-btn active" data-filter="all">All Stories</button>
+            {% assign divisions = "" | split: "," %}
             {% for post in site.posts %}
-            <article class="blog-card">
-                <div class="blog-meta">
-                    <time datetime="{{ post.date | date_to_xmlschema }}">
-                        {{ post.date | date: "%B %d, %Y" }}
-                    </time>
+                {% if post.division %}
+                    {% unless divisions contains post.division %}
+                        {% assign divisions = divisions | push: post.division %}
+                    {% endunless %}
+                {% endif %}
+            {% endfor %}
+            {% for div in divisions %}
+                <button class="filter-btn" data-filter="{{ div | slugify }}">{{ div }}</button>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="blog-list-section">
+    <div class="container">
+        <div class="blog-grid" id="blogGrid">
+            {% for post in site.posts %}
+            <article class="blog-card" data-division="{{ post.division | slugify }}" data-tags="{% for tag in post.tags %}{{ tag | downcase }} {% endfor %}" data-title="{{ post.title | downcase }}" data-excerpt="{{ post.excerpt | strip_html | downcase }}">
+                <div class="blog-card-image">
+                    {% if post.image %}
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}">
+                    {% else %}
+                        <div class="blog-card-placeholder">
+                            {% if post.tags contains 'Harry Potter' or post.layout == 'newspaper' %}
+                                <i class="fas fa-scroll"></i>
+                            {% elsif post.tags contains 'OpenSearch' %}
+                                <i class="fas fa-database"></i>
+                            {% else %}
+                                <i class="fas fa-file-alt"></i>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
-                <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-                <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-                <a href="{{ post.url | relative_url }}" class="read-more">
-                    Read More <i class="fas fa-arrow-right"></i>
-                </a>
+                <div class="blog-card-content">
+                    <div class="card-meta">
+                        <time datetime="{{ post.date | date_to_xmlschema }}">
+                            <i class="far fa-calendar-alt"></i> {{ post.date | date: "%B %d, %Y" }}
+                        </time>
+                        {% if post.author %}
+                        <span class="card-author"><i class="far fa-user"></i> {{ post.author }}</span>
+                        {% endif %}
+                    </div>
+                    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                    <div class="card-tags">
+                        {% for tag in post.tags %}
+                        <span class="tag-badge">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{{ post.url | relative_url }}" class="read-more">
+                        Read Story <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
             </article>
             {% endfor %}
         </div>
         
-        {% if site.posts.size == 0 %}
-        <div class="empty-state">
-            <i class="fas fa-pencil-alt"></i>
-            <h3>No posts yet</h3>
-            <p>Check back soon for new content!</p>
+        <div class="empty-state" id="blogEmptyState" style="display: none; text-align: center; padding: 4rem 2rem;">
+            <i class="fas fa-search" style="font-size: 3rem; color: var(--text-light); margin-bottom: 1.5rem; opacity: 0.5;"></i>
+            <h3>No stories found</h3>
+            <p>Try searching for other terms or selecting a different category!</p>
         </div>
-        {% endif %}
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('blogSearch');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const blogCards = document.querySelectorAll('.blog-card');
+    const emptyState = document.getElementById('blogEmptyState');
+    
+    let activeFilter = 'all';
+    let searchQuery = '';
+    
+    function filterPosts() {
+        let visibleCount = 0;
+        
+        blogCards.forEach(card => {
+            const title = card.getAttribute('data-title') || '';
+            const excerpt = card.getAttribute('data-excerpt') || '';
+            const tagsStr = card.getAttribute('data-tags') || '';
+            const divisionStr = card.getAttribute('data-division') || '';
+            
+            const matchesSearch = title.includes(searchQuery) || 
+                                  excerpt.includes(searchQuery) || 
+                                  tagsStr.includes(searchQuery);
+                                  
+            const matchesFilter = activeFilter === 'all' || 
+                                  divisionStr === activeFilter;
+                                  
+            if (matchesSearch && matchesFilter) {
+                card.style.display = 'flex';
+                // Trigger smooth fade-in animation
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transition = 'opacity 0.4s ease';
+                }, 50);
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        if (visibleCount === 0) {
+            emptyState.style.display = 'block';
+        } else {
+            emptyState.style.display = 'none';
+        }
+    }
+    
+    // Search listener
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value.toLowerCase().trim();
+            filterPosts();
+        });
+    }
+    
+    // Filter click listeners
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeFilter = this.getAttribute('data-filter');
+            filterPosts();
+        });
+    });
+});
+</script>

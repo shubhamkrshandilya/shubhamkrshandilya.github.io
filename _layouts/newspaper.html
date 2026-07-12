@@ -1,0 +1,549 @@
+---
+layout: default
+---
+
+<!-- Newspaper Theme Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Dancing+Script:wght@700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+/* Reset default post wrappers if necessary to make this layout full-width */
+.blog-post {
+    padding: 0 !important;
+}
+
+/* Newspaper Container with Paper Texture */
+.newspaper-article {
+    --news-bg: #f4edd8;
+    --news-ink: #1c1a17;
+    --news-border: #383028;
+    --news-muted: #5c5246;
+    
+    background-color: var(--news-bg) !important;
+    color: var(--news-ink) !important;
+    font-family: 'Cardo', Georgia, serif;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+    transition: var(--transition);
+    
+    /* Elegant Vintage Paper Noise Overlay */
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.05) 100%), 
+                      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Adapt for dark theme newspaper - "Midnight Ink" Edition */
+body:not(.light-theme) .newspaper-article {
+    --news-bg: #150f0d;
+    --news-ink: #ebdcc5;
+    --news-border: #4d3f34;
+    --news-muted: #a3907c;
+    
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.3) 100%), 
+                      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.newspaper-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid var(--news-border);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    background-color: var(--news-bg);
+    position: relative;
+}
+
+/* Decorative corner frames to give a high-quality print feel */
+.newspaper-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid var(--news-border);
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* Masthead Header */
+.newspaper-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.newspaper-meta-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--news-muted);
+    border-bottom: 2px solid var(--news-border);
+    padding-bottom: 0.5rem;
+}
+
+.newspaper-title-main {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 800;
+    margin: 0.5rem 0;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--news-ink);
+}
+
+.newspaper-tagline {
+    font-family: 'Cardo', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--news-muted);
+}
+
+/* Vintage Ticker (Weather/Price Widget) */
+.newspaper-ticker {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-top: 1px solid var(--news-border);
+    border-bottom: 1px solid var(--news-border);
+    padding: 0.35rem 0.75rem;
+    margin: 0.75rem 0;
+    color: var(--news-muted);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+body:not(.light-theme) .newspaper-ticker {
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+.newspaper-meta-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-top: 4px double var(--news-border);
+    border-bottom: 4px double var(--news-border);
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+}
+
+.newspaper-meta-bottom span {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Main Headline */
+.newspaper-headline {
+    text-align: center;
+    margin: 1.5rem 0 2rem;
+}
+
+.newspaper-headline h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--news-ink) !important;
+}
+
+/* Optimized single column structure for technical reading */
+.newspaper-columns {
+    max-width: 750px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .newspaper-title-main {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .newspaper-title-main {
+        font-size: 2.25rem;
+    }
+    .newspaper-headline h1 {
+        font-size: 2rem;
+    }
+}
+
+.newspaper-columns p {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-indent: 0; /* removed paragraph indent in single column layout for clean typography */
+}
+
+/* First Letter Drop Cap */
+.newspaper-columns > p:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.6rem;
+    margin-top: 0.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.newspaper-columns h2, 
+.newspaper-columns h3, 
+.newspaper-columns h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--news-ink) !important;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.newspaper-columns h2 {
+    font-size: 1.9rem;
+    border-bottom: 2px solid var(--news-border);
+    padding-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+.newspaper-columns h3 {
+    font-size: 1.4rem;
+    border-bottom: 1px dashed var(--news-border);
+    padding-bottom: 0.25rem;
+}
+
+/* Vintage Clipping Boxes (Advertisements/Highlights) */
+.newspaper-clipping {
+    border: 2px solid var(--news-border);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background-color: rgba(0, 0, 0, 0.02);
+    text-align: left;
+}
+
+body:not(.light-theme) .newspaper-clipping {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.newspaper-clipping h3 {
+    margin-top: 0;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--news-border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.newspaper-clipping p {
+    text-indent: 0;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.newspaper-clipping ul {
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+/* Code Highlights styled as vintage press clippings with Typewriter Font */
+.newspaper-columns .highlighter-rouge {
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.newspaper-columns pre {
+    border: 1px dashed var(--news-border);
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: 1.25rem;
+    font-family: 'Courier Prime', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin-bottom: 0;
+    color: var(--news-ink) !important;
+    border-radius: 4px;
+}
+
+body:not(.light-theme) .newspaper-columns pre {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Separator ornaments */
+.newspaper-ornament {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 2rem 0;
+    color: var(--news-muted);
+}
+
+/* Cursive Signature Block */
+.newspaper-signature-container {
+    max-width: 750px;
+    margin: 2rem auto;
+    border-top: 1px solid var(--news-border);
+    padding-top: 1.5rem;
+    overflow: hidden;
+}
+
+.newspaper-signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    text-align: right;
+    margin-right: 2rem;
+    transform: rotate(-3deg);
+    display: inline-block;
+    float: right;
+    letter-spacing: 1px;
+}
+
+/* Footer End Mark */
+.newspaper-footer {
+    text-align: center;
+    border-top: 1px solid var(--news-border);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+}
+
+.newspaper-end-mark {
+    font-size: 1.25rem;
+    color: var(--news-muted);
+}
+
+/* Interactive Slider Custom Styling */
+input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: var(--news-border);
+    border-radius: 2px;
+}
+input[type=range]::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px;
+    border: 1px solid var(--news-border);
+}
+</style>
+
+<div class="newspaper-article">
+    <div class="newspaper-wrapper">
+        <!-- Masthead -->
+        <header class="newspaper-header">
+            <div class="newspaper-meta-top">
+                <span>{{ page.edition | default: "Special Edition" }}</span>
+                <span>Vol. {{ page.volume | default: "I" }} No. {{ page.issue | default: "1" }}</span>
+            </div>
+            
+            <div class="newspaper-title-main">
+                {{ page.newspaper_title | default: "The Developer's Post" }}
+            </div>
+            
+            <div class="newspaper-tagline">
+                {{ page.newspaper_tagline | default: "Explaining Technology Through the Art of Storytelling" }}
+            </div>
+            
+            <!-- Weather/Exchange rate Ticker -->
+            <div class="newspaper-ticker">
+                <span>Weather: {{ page.weather | default: "Windy with light code reviews" }}</span>
+                <span>Exchange: {{ page.ticker_index | default: "1 Galleon = 17 Sickles | 1 USD = 0.0001 BTC" }}</span>
+                <span>Price: {{ page.price | default: "5 Knuts" }}</span>
+            </div>
+            
+            <div class="newspaper-meta-bottom">
+                <span>By {{ page.author | default: site.title }}</span>
+                <span>Section: {{ page.section | default: "System Design" }}</span>
+                <span>Date: {{ page.date | date: "%B %d, %Y" }}</span>
+            </div>
+        </header>
+
+        <!-- Main Post Headline -->
+        <div class="newspaper-headline">
+            <h1>{{ page.title }}</h1>
+        </div>
+
+        <!-- Dynamic Gazette Index (Table of Contents) -->
+        <div class="newspaper-clipping gazette-index-box" style="max-width: 750px; margin: 0 auto 2.5rem; border: 1px solid var(--news-border); padding: 1.25rem; display: none;">
+            <h3 style="font-family: 'Playfair Display', serif; text-align: center; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 0.75rem; border-bottom: 1px double var(--news-border); padding-bottom: 0.4rem;">
+                Today's Gazette Index
+            </h3>
+            <ul id="gazetteIndexList" style="list-style: none; padding-left: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+            </ul>
+        </div>
+
+        <!-- Columned Body Content -->
+        <div class="newspaper-columns">
+            {{ content }}
+        </div>
+        
+        <!-- Cursive Author Signature -->
+        <div class="newspaper-signature-container">
+            <div class="newspaper-signature">
+                {{ page.author | default: site.title }}
+            </div>
+        </div>
+
+        <!-- Interactive Puzzle Section (Classified Ads style) -->
+        {% if page.quorum_puzzle %}
+        <div class="newspaper-wide" style="max-width: 750px; margin: 0 auto;">
+            <div class="newspaper-clipping" style="margin-top: 3rem; border: 2px solid var(--news-border);">
+                <h3>Classifieds: The Quorum Balancer Game</h3>
+                <p style="text-indent: 0; font-size: 0.95rem; text-align: center; margin-bottom: 1.5rem;">
+                    A distributed consensus network is forming. Help elect a leader by adjusting the sliders. 
+                    Identify the minimum number of nodes required for a majority (Quorum) for your selected cluster size.
+                </p>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; max-width: 500px; margin: 0 auto;">
+                    <div style="width: 100%; display: flex; justify-content: space-between; font-weight: bold;">
+                        <span>Total Cluster Size (N):</span>
+                        <span id="puzzleClusterVal" style="color: var(--primary-color); font-size: 1.1rem;">5 Nodes</span>
+                    </div>
+                    <input type="range" id="puzzleClusterSlider" min="3" max="15" step="2" value="5" style="width: 100%;">
+                    
+                    <div style="width: 100%; display: flex; justify-content: space-between; font-weight: bold; margin-top: 0.5rem;">
+                        <span>Votes for Leader Candidate:</span>
+                        <span id="puzzleQuorumVal" style="color: var(--primary-color); font-size: 1.1rem;">3 Votes</span>
+                    </div>
+                    <input type="range" id="puzzleQuorumSlider" min="1" max="5" step="1" value="3" style="width: 100%;">
+                    
+                    <button id="checkPuzzleBtn" style="background: var(--news-ink); color: var(--news-bg); border: 1px solid var(--news-border); padding: 0.5rem 2rem; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: bold; margin-top: 1rem; transition: var(--transition); border-radius: 4px;">
+                        Cast Ballots
+                    </button>
+                    
+                    <div id="puzzleResult" style="font-style: italic; font-size: 0.95rem; text-align: center; font-weight: bold; color: var(--news-muted); margin-top: 0.5rem; min-height: 1.5rem;">
+                        Adjust variables and click "Cast Ballots" to elect the leader.
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- End Mark -->
+        <footer class="newspaper-footer">
+            <div class="newspaper-end-mark">❖ ❖ ❖</div>
+        </footer>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Dynamic Table of Contents (Gazette Index)
+    const columnsContainer = document.querySelector('.newspaper-columns');
+    const indexBox = document.querySelector('.gazette-index-box');
+    const indexList = document.getElementById('gazetteIndexList');
+    
+    if (columnsContainer && indexBox && indexList) {
+        const headings = columnsContainer.querySelectorAll('h2');
+        if (headings.length > 0) {
+            indexBox.style.display = 'block';
+            headings.forEach((heading, idx) => {
+                const id = heading.id || 'gazette-section-' + idx;
+                heading.id = id;
+                
+                const li = document.createElement('li');
+                li.style.textIndent = '0';
+                li.style.marginBottom = '0';
+                
+                const a = document.createElement('a');
+                a.href = '#' + id;
+                a.textContent = (idx + 1) + '. ' + heading.textContent;
+                a.style.color = 'var(--news-ink)';
+                a.style.textDecoration = 'none';
+                a.style.borderBottom = '1px dotted var(--news-border)';
+                a.style.display = 'block';
+                a.style.padding = '0.2rem 0';
+                a.style.transition = 'var(--transition)';
+                
+                a.addEventListener('mouseenter', function() {
+                    this.style.color = 'var(--primary-color)';
+                    this.style.paddingLeft = '5px';
+                });
+                a.addEventListener('mouseleave', function() {
+                    this.style.color = 'var(--news-ink)';
+                    this.style.paddingLeft = '0';
+                });
+                
+                li.appendChild(a);
+                indexList.appendChild(li);
+            });
+        }
+    }
+
+    // 2. Interactive Puzzle Game
+    const clusterSlider = document.getElementById('puzzleClusterSlider');
+    const quorumSlider = document.getElementById('puzzleQuorumSlider');
+    const clusterVal = document.getElementById('puzzleClusterVal');
+    const quorumVal = document.getElementById('puzzleQuorumVal');
+    const checkBtn = document.getElementById('checkPuzzleBtn');
+    const result = document.getElementById('puzzleResult');
+    
+    if (clusterSlider && quorumSlider) {
+        clusterSlider.addEventListener('input', function() {
+            clusterVal.textContent = this.value + " Nodes";
+            
+            // Adjust maximum possible votes dynamically
+            const oldVal = parseInt(quorumSlider.value);
+            const maxVal = parseInt(this.value);
+            quorumSlider.max = maxVal;
+            if (oldVal > maxVal) {
+                quorumSlider.value = maxVal;
+                quorumVal.textContent = maxVal + " Votes";
+            }
+        });
+        
+        quorumSlider.addEventListener('input', function() {
+            quorumVal.textContent = this.value + " Votes";
+        });
+        
+        checkBtn.addEventListener('click', function() {
+            const n = parseInt(clusterSlider.value);
+            const q = parseInt(quorumSlider.value);
+            const expected = Math.floor(n / 2) + 1;
+            
+            if (q === expected) {
+                result.style.color = 'var(--primary-color)';
+                result.innerHTML = '✨ Quorum Met! A new Leader is crowned! (Minimum votes needed: ' + expected + ') ✨';
+            } else if (q > expected) {
+                result.style.color = 'var(--news-ink)';
+                result.innerHTML = '❌ Safe but sub-optimal. You have a majority, but ' + expected + ' is the minimum required votes.';
+            } else {
+                result.style.color = 'var(--news-ink)';
+                result.innerHTML = '❌ Split-Brain Danger! ' + q + ' votes is insufficient for a cluster of ' + n + ' nodes. Try again.';
+            }
+        });
+        
+        // Add button hover transitions
+        checkBtn.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'var(--primary-color)';
+            this.style.borderColor = 'var(--primary-color)';
+            this.style.color = 'white';
+        });
+        checkBtn.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'var(--news-ink)';
+            this.style.borderColor = 'var(--news-border)';
+            this.style.color = 'var(--news-bg)';
+        });
+    }
+});
+</script>
