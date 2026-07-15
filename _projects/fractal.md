@@ -1,7 +1,7 @@
 ---
 title: Interactive Fractal & Chaos Suite
 description: A high-performance browser-based creative coding suite visualizing recursive geometry, Perlin noise swaying trees, and real-time morphing Mandelbrot and Julia complex planes.
-image: /assets/images/projects/fractal-suite.jpg
+image: /assets/images/projects/fractal-suite.png
 tags: [p5.js, Creative Coding, Mathematics, Chaos Theory, JavaScript]
 github: https://github.com/shubhamkrshandilya/fractal
 date: 2022-05-08

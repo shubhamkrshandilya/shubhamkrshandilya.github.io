@@ -1,7 +1,7 @@
 ---
 title: Day & Night Observatory
 description: An interactive astronomical solar cycle simulator. Built with p5.js, featuring color stop gradient interpolations, polar sun/moon coordinates, ambient hills shading, and aurora borealis rendering.
-image: /assets/images/projects/day-night.jpg
+image: /assets/images/projects/day-night.png
 tags: [p5.js, Creative Coding, Astronomy, Physics, JavaScript]
 github: https://github.com/shubhamkrshandilya/day-and-night
 date: 2021-12-14

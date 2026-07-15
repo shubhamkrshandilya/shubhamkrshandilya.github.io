@@ -1,7 +1,7 @@
 ---
 title: Twelve Bead (Baro Guti)
 description: A browser-based recreation of the traditional South Asian strategic board game built with p5.js. Features minimax AI, full move-validation, and responsive 3D glass bead aesthetics.
-image: /assets/images/projects/twelve-bead.jpg
+image: /assets/images/projects/twelve-bead.png
 tags: [p5.js, Creative Coding, Board Games, Minimax AI, JavaScript]
 github: https://github.com/shubhamkrshandilya/twelve-bead
 date: 2021-10-29

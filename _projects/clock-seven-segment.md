@@ -1,7 +1,7 @@
 ---
 title: Cyberpunk LED Chronometer
 description: A procedural digital 7-segment display clock simulator simulating LED glow scattering. Built with p5.js, featuring color presets, glow blur adjustments, and responsive calendar telemetry.
-image: /assets/images/projects/seven-segment.jpg
+image: /assets/images/projects/seven-segment.png
 tags: [p5.js, Creative Coding, Electronics, Physics, JavaScript]
 github: https://github.com/shubhamkrshandilya/clock-seven-segment
 date: 2020-11-18

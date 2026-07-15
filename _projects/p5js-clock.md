@@ -1,7 +1,7 @@
 ---
 title: Mechanical & Celestial Chronograph Suite
 description: A high-end interactive browser chronometer simulating gear train tooth ratios and day-night astronomical orbits. Built with p5.js, featuring continuous sweep, stopwatch dials, and time speed controls.
-image: /assets/images/projects/chronograph-suite.jpg
+image: /assets/images/projects/chronograph-suite.png
 tags: [p5.js, Creative Coding, Horology, Physics, JavaScript]
 github: https://github.com/shubhamkrshandilya/p5js-clock
 date: 2021-10-22

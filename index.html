@@ -268,6 +268,19 @@ title: Home
                 <p id="instructionText"><i class="fas fa-mouse-pointer"></i> Move your mouse to interact. Click to create bursts of packets.</p>
             </div>
         </div>
+        
+        <div class="creative-explore-card">
+            <h3 class="creative-explore-title">Interactive Showcases</h3>
+            <p class="creative-explore-desc">Diving deeper into mathematical models, physics simulation sandboxes, and retro-futuristic arcade game recreations.</p>
+            <div class="creative-explore-buttons">
+                <a href="https://shubhamkrshandilya.github.io/p5js-games/go/index.html" target="_blank" class="creative-explore-btn">
+                    <i class="fas fa-gamepad"></i> Play Cyber Go
+                </a>
+                <a href="https://shubhamkrshandilya.github.io/p5js-simulations/" target="_blank" class="creative-explore-btn btn-outline">
+                    <i class="fas fa-flask"></i> Explore Simulations Suite
+                </a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -281,39 +294,45 @@ title: Home
     <div class="container">
         <h2 class="section-title">Research & College Projects</h2>
         <div class="projects-grid">
-            {% for project in site.projects limit:6 %}
-            <div class="project-card">
-                <div class="project-image">
-                    {% if project.image %}
-                    <img src="{{ project.image | relative_url }}" alt="{{ project.title }}">
-                    {% else %}
-                    <div class="project-placeholder">
-                        <i class="fas fa-code"></i>
+            {% assign project_count = 0 %}
+            {% for project in site.projects %}
+                {% unless project.tags contains 'p5.js' %}
+                    {% if project_count < 6 %}
+                    <div class="project-card">
+                        <div class="project-image">
+                            {% if project.image %}
+                            <img src="{{ project.image | relative_url }}" alt="{{ project.title }}">
+                            {% else %}
+                            <div class="project-placeholder">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="project-content">
+                            <h3>{{ project.title }}</h3>
+                            <p>{{ project.description }}</p>
+                            <div class="project-tags">
+                                {% for tag in project.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="project-links">
+                                {% if project.github %}
+                                <a href="{{ project.github }}" target="_blank" class="project-link">
+                                    <i class="fab fa-github"></i> Code
+                                </a>
+                                {% endif %}
+                                {% if project.demo %}
+                                <a href="{{ project.demo }}" target="_blank" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i> Demo
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
+                    {% assign project_count = project_count | plus: 1 %}
                     {% endif %}
-                </div>
-                <div class="project-content">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description }}</p>
-                    <div class="project-tags">
-                        {% for tag in project.tags %}
-                        <span class="tag">{{ tag }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="project-links">
-                        {% if project.github %}
-                        <a href="{{ project.github }}" target="_blank" class="project-link">
-                            <i class="fab fa-github"></i> Code
-                        </a>
-                        {% endif %}
-                        {% if project.demo %}
-                        <a href="{{ project.demo }}" target="_blank" class="project-link">
-                            <i class="fas fa-external-link-alt"></i> Demo
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+                {% endunless %}
             {% endfor %}
         </div>
         <div class="text-center">
