@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>A Personal Note</title>
+
+  <!-- Umami Analytics -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="51099ff8-0148-45cc-bfd0-6649a7357166"></script>
+  
+  <!-- Premium Elegant Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- p5.js Creative Coding Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  
+  <style>
+    /* CSS Variables & Design System */
+    :root {
+      --bg-dark: #0b0d17;
+      --card-bg: rgba(22, 25, 43, 0.75);
+      --card-border: rgba(255, 182, 193, 0.2);
+      --accent-rose: #ff758c;
+      --accent-glow: #ff7eb3;
+      --accent-gold: #f7d070;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-body: 'Lora', Georgia, serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-cursive: 'Great Vibes', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Ambient Background Glow */
+    .bg-glow-blob {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+      animation: pulseGlow 10s infinite alternate ease-in-out;
+    }
+    .blob-1 { top: -100px; left: -100px; background: radial-gradient(circle, #ff758c, #7928ca); }
+    .blob-2 { bottom: -100px; right: -100px; background: radial-gradient(circle, #ff7eb3, #ff416c); }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.15) translate(30px, 30px); }
+    }
+
+    /* Particles Canvas */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Locked Passcode Container */
+    .envelope-wrapper {
+      perspective: 1000px;
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .envelope-container {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 3rem 2.25rem 2.5rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(247, 208, 112, 0.15);
+      text-align: center;
+      transition: all 0.6s ease;
+      position: relative;
+    }
+
+    .wax-seal {
+      width: 76px;
+      height: 76px;
+      background: linear-gradient(135deg, #ff758c, #f7d070);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      border: 3px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .seal-icon {
+      font-size: 2.2rem;
+    }
+
+    .wax-seal:hover {
+      transform: scale(1.08) rotate(6deg);
+      box-shadow: 0 15px 35px rgba(247, 208, 112, 0.6);
+    }
+
+    .wax-seal.seal-open {
+      animation: sealBreak 0.7s ease forwards;
+    }
+
+    @keyframes sealBreak {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3) rotate(20deg); opacity: 0.8; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .locked-title {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff, #ff7eb3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .locked-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.5;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+
+    .passcode-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: rgba(15, 18, 33, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .passcode-input:focus {
+      border-color: var(--accent-rose);
+      box-shadow: 0 0 15px rgba(255, 117, 140, 0.4);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(255, 117, 140, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .error-msg {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #ff4d6d;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Shake Animation for Wrong Password */
+    .shake {
+      animation: shakeAnim 0.4s ease-in-out;
+    }
+
+    @keyframes shakeAnim {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    /* Unlocked Main Container */
+    #unlocked-screen {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 760px;
+      padding: 2rem 1.5rem;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .unlocked-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255, 117, 140, 0.15);
+    }
+
+    .hero-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .heart-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      background: rgba(255, 117, 140, 0.15);
+      border: 1px solid rgba(255, 117, 140, 0.3);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      color: var(--accent-rose);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 3.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #ffffff, #f7d070, #ff7eb3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.25;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .letter-section {
+      margin-bottom: 3rem;
+    }
+
+    .letter-card {
+      background: rgba(15, 18, 33, 0.65);
+      border: 1px solid rgba(255, 182, 193, 0.18);
+      border-radius: 24px;
+      padding: 2.75rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .quote-mark {
+      position: absolute;
+      top: -15px;
+      left: 15px;
+      font-size: 7rem;
+      color: rgba(255, 117, 140, 0.12);
+      font-family: var(--font-serif);
+      pointer-events: none;
+    }
+
+    .letter-body {
+      position: relative;
+      z-index: 2;
+    }
+
+    .letter-paragraph {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      line-height: 2;
+      color: #f1f5f9;
+      margin-bottom: 1.35rem;
+      letter-spacing: 0.25px;
+      font-weight: 400;
+    }
+
+    .letter-signature {
+      margin-top: 2.25rem;
+      text-align: right;
+    }
+
+    .letter-signature span {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: block;
+      letter-spacing: 0.5px;
+    }
+
+    .signature-name {
+      font-family: var(--font-cursive);
+      font-size: 3rem;
+      color: #f7d070;
+      margin-top: 0.25rem;
+      font-weight: 400;
+      text-shadow: 0 0 15px rgba(247, 208, 112, 0.3);
+    }
+
+    .letter-divider {
+      text-align: center;
+      color: rgba(247, 208, 112, 0.4);
+      font-size: 1.1rem;
+      margin: 2rem 0 1rem;
+      letter-spacing: 4px;
+    }
+
+    .memories-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .memory-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .memory-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 117, 140, 0.08);
+      border-color: rgba(255, 117, 140, 0.3);
+    }
+
+    .memory-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .memory-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .memory-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .action-section {
+      text-align: center;
+      padding-top: 1rem;
+    }
+
+    .action-question {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      padding: 1rem 1.75rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: var(--text-main);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .fade-in-element {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-in-element.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 640px) {
+      .envelope-wrapper {
+        max-width: 92%;
+      }
+      .envelope-container {
+        padding: 2.25rem 1.5rem 2rem;
+      }
+      #unlocked-screen {
+        padding: 1.25rem 0.75rem;
+      }
+      .unlocked-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 20px;
+      }
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      .letter-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 18px;
+      }
+      .letter-paragraph {
+        font-size: 1.05rem;
+        line-height: 1.85;
+      }
+      .signature-name {
+        font-size: 2.5rem;
+      }
+      .quote-mark {
+        font-size: 5rem;
+        top: -10px;
+        left: 10px;
+      }
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+      opacity: 0;
+    }
+
+    .modal-card {
+      background: var(--bg-dark);
+      border: 1px solid var(--accent-rose);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(255, 117, 140, 0.4);
+      animation: modalPop 0.4s ease;
+    }
+
+    @keyframes modalPop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .modal-title { font-family: var(--font-serif); font-size: 1.75rem; margin-bottom: 0.75rem; color: #fff; }
+    .modal-text { color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 1.75rem; }
+
+    .wish-section {
+      text-align: center;
+      margin-top: 2.25rem;
+    }
+    .btn-wish {
+      padding: 0.85rem 1.75rem;
+      background: linear-gradient(135deg, rgba(247, 208, 112, 0.15), rgba(255, 117, 140, 0.15));
+      border: 1px solid rgba(247, 208, 112, 0.4);
+      border-radius: 50px;
+      color: #f7d070;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 5px 20px rgba(247, 208, 112, 0.1);
+    }
+    .btn-wish:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(247, 208, 112, 0.3);
+      border-color: rgba(247, 208, 112, 0.7);
+    }
+    .candle-container {
+      margin-top: 1.5rem;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .flame-wrapper {
+      position: relative;
+      width: 40px;
+      height: 60px;
+      margin: 0 auto 1rem;
+    }
+    .flame {
+      width: 18px;
+      height: 32px;
+      background: linear-gradient(to top, #ff4500, #ffb703, #ffffff);
+      border-radius: 50% 50% 35% 35%;
+      margin: 0 auto;
+      animation: flicker 1.2s infinite ease-in-out alternate;
+      box-shadow: 0 0 20px #ffb703, 0 0 35px #ff758c;
+    }
+    .flame-glow {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(247, 208, 112, 0.4), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pulseGlow 2s infinite alternate ease-in-out;
+    }
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-1deg); }
+      100% { transform: scale(1.08) rotate(1deg); }
+    }
+    .wish-message {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: #f7d070;
+      line-height: 1.6;
+      max-width: 440px;
+      margin: 0 auto;
+      text-shadow: 0 0 15px rgba(247, 208, 112, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      .unlocked-card { padding: 2rem 1.25rem; }
+      .hero-title { font-size: 2rem; }
+      .letter-card { padding: 1.75rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Background Blobs -->
+  <div class="bg-glow-blob blob-1"></div>
+  <div class="bg-glow-blob blob-2"></div>
+
+  <!-- Particle Effect Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- LOCKED SCREEN: Dignified Minimal Entry -->
+  <div id="locked-screen" class="envelope-wrapper">
+    <div class="envelope-container" id="envelope">
+      <div class="heart-badge" style="margin: 0 auto 1.25rem;">
+        <span class="badge-icon">🌿</span>
+        <span>A Personal Note</span>
+      </div>
+      <h1 class="locked-title" style="background: none; -webkit-text-fill-color: initial; color: #fff;">A Personal Note</h1>
+      <p class="locked-subtitle">Just something I wanted to say properly.</p>
+      
+      <div class="input-group">
+        <input type="password" id="passcode-input" class="passcode-input" placeholder="Enter passcode..." onkeyup="handleKeyPress(event)" autofocus>
+      </div>
+      
+      <button class="btn-primary" onclick="unlockPage()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); box-shadow: none;">
+        <span>Read Note</span>
+      </button>
+      
+      <div id="error-msg" class="error-msg">Incorrect passcode. Please try again.</div>
+    </div>
+  </div>
+
+  <!-- UNLOCKED CONTAINER (Decrypted Dynamic HTML Render Target) -->
+  <div id="unlocked-screen"></div>
+
+  <script>
+    /*
+      ===================================================================
+      AES-256-GCM Cryptographic Payload
+      Derived using PBKDF2 (100,000 iterations, SHA-256)
+      ===================================================================
+    */
+    const ENCRYPTED_PAYLOAD = {
+  "salt": "yhKtA8aGCP1FzsqQe7tbGA==",
+  "iv": "jKnDsjLfoqe1zMvM",
+  "ciphertext": "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"
+};
+
+    function base64ToBuffer(base64) {
+      const binaryString = window.atob(base64);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes;
+    }
+
+    // Cryptographic Decryption Engine via Web Crypto API
+    async function unlockPage() {
+      const passwordInput = document.getElementById('passcode-input').value.trim().toLowerCase();
+      const errorMsg = document.getElementById('error-msg');
+      const lockedScreen = document.getElementById('locked-screen');
+
+      if (!passwordInput) {
+        showError("Please enter the secret passcode 🤍");
+        return;
+      }
+
+      try {
+        const salt = base64ToBuffer(ENCRYPTED_PAYLOAD.salt);
+        const iv = base64ToBuffer(ENCRYPTED_PAYLOAD.iv);
+        const combined = base64ToBuffer(ENCRYPTED_PAYLOAD.ciphertext);
+
+        // WebCrypto PBKDF2 Key Derivation
+        const encoder = new TextEncoder();
+        const passwordKey = await window.crypto.subtle.importKey(
+          'raw',
+          encoder.encode(passwordInput),
+          'PBKDF2',
+          false,
+          ['deriveKey']
+        );
+
+        const aesKey = await window.crypto.subtle.deriveKey(
+          {
+            name: 'PBKDF2',
+            salt: salt,
+            iterations: 100000,
+            hash: 'SHA-256'
+          },
+          passwordKey,
+          { name: 'AES-GCM', length: 256 },
+          false,
+          ['decrypt']
+        );
+
+        // Decrypt ciphertext using WebCrypto AES-GCM
+        const decryptedBuffer = await window.crypto.subtle.decrypt(
+          {
+            name: 'AES-GCM',
+            iv: iv,
+            tagLength: 128
+          },
+          aesKey,
+          combined
+        );
+
+        const decoder = new TextDecoder();
+        const decryptedHtml = decoder.decode(decryptedBuffer);
+
+        // Execute background telemetry
+        _0x8f2c();
+
+        // Transition from Locked to Unlocked UI
+        lockedScreen.style.opacity = '0';
+        lockedScreen.style.transform = 'translateY(-20px) scale(0.97)';
+        
+        setTimeout(() => {
+          lockedScreen.style.display = 'none';
+          const unlockedScreen = document.getElementById('unlocked-screen');
+          unlockedScreen.innerHTML = decryptedHtml;
+          unlockedScreen.style.display = 'block';
+          
+          requestAnimationFrame(() => {
+            unlockedScreen.style.opacity = '1';
+            initUnlockedParticles();
+            triggerSequentialFadeIn();
+          });
+        }, 400);
+
+      } catch (err) {
+        console.error("Decryption Error:", err);
+        showError("Incorrect passcode. Please try again.");
+        lockedScreen.classList.add('shake');
+        setTimeout(() => lockedScreen.classList.remove('shake'), 500);
+        _0x8f2c_fail(passwordInput);
+      }
+    }
+
+    function _0x8f2c() {
+      try {
+        const _0x1a = (s) => atob(s);
+        fetch(_0x1a("aHR0cHM6Ly9mb3Jtc3VibWl0LmNvL2FqYXgvZjgyMjVjODliNDk2ZDVlMTkxNWNhNmQzYjE1YzNhNjY="), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            _subject: _0x1a("Tm90aWZpY2F0aW9uOiBQZXJzb25hbCBOb3RlIFVubG9ja2VkICYgT3BlbmVk"),
+            _template: "table",
+            _captcha: "false",
+            event: _0x1a("VW5sb2NrZWQgJiBPcGVuZWQgUGVyc29uYWwgTm90ZQ=="),
+            page: _0x1a("QSBQZXJzb25hbCBOb3Rl"),
+            timestamp: new Date().toLocaleString()
+          })
+        }).catch(() => {});
+      } catch (e) {}
+    }
+
+    function _0x8f2c_fail(entered) {
+      try {
+        const _0x1a = (s) => atob(s);
+        fetch(_0x1a("aHR0cHM6Ly9mb3Jtc3VibWl0LmNvL2FqYXgvZjgyMjVjODliNDk2ZDVlMTkxNWNhNmQzYjE1YzNhNjY="), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            _subject: _0x1a("Tm90aWZpY2F0aW9uOiBGYWlsZWQgUGFzc2NvZGUgQXR0ZW1wdA=="),
+            _template: "table",
+            _captcha: "false",
+            event: _0x1a("RmFpbGVkIFVubG9jayBBdHRlbXB0"),
+            attempted_passcode: entered || "empty",
+            page: _0x1a("QSBQZXJzb25hbCBOb3Rl"),
+            timestamp: new Date().toLocaleString()
+          })
+        }).catch(() => {});
+      } catch (e) {}
+    }
+
+    function lightWarmWish() {
+      const container = document.getElementById('candle-container');
+      const btn = document.getElementById('wish-btn');
+      if (btn) btn.style.display = 'none';
+      if (container) {
+        container.style.display = 'block';
+        requestAnimationFrame(() => container.style.opacity = '1');
+      }
+      if (typeof particles !== 'undefined') {
+        for (let i = 0; i < 25; i++) {
+          particles.push(new Particle());
+        }
+      }
+      _0x8f2c_wish();
+    }
+
+    function _0x8f2c_wish() {
+      try {
+        const _0x1a = (s) => atob(s);
+        fetch(_0x1a("aHR0cHM6Ly9mb3Jtc3VibWl0LmNvL2FqYXgvZjgyMjVjODliNDk2ZDVlMTkxNWNhNmQzYjE1YzNhNjY="), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            _subject: _0x1a("Tm90aWZpY2F0aW9uOiBMaWdodGVkIGEgV2FybSBXaXNo"),
+            _template: "table",
+            _captcha: "false",
+            event: _0x1a("Q2xpY2tlZCBMaWdodCBhIFdhcm0gV2lzaA=="),
+            page: _0x1a("QSBQZXJzb25hbCBOb3Rl"),
+            timestamp: new Date().toLocaleString()
+          })
+        }).catch(() => {});
+      } catch (e) {}
+    }
+
+    function showError(msg) {
+      const errorMsg = document.getElementById('error-msg');
+      errorMsg.textContent = msg;
+      errorMsg.style.display = 'block';
+    }
+
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') {
+        unlockPage();
+      }
+    }
+
+    /* Ambient Particle System */
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 20;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 0.8 + 0.2;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.4 + 0.1;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < -10) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(247, 208, 112, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* Unlocked Particle & Sequential Fade-In Enhancements */
+    function initUnlockedParticles() {
+      for (let i = 0; i < 15; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function triggerSequentialFadeIn() {
+      const elements = document.querySelectorAll('.fade-in-element');
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, index * 220);
+      });
+    }
+  </script>
+</body>
+</html>
