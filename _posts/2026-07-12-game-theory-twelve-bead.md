@@ -84,7 +84,7 @@ In the tree above, the AI chooses **Move 2** because it guarantees a score of at
         <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: flex-start; text-align: left;">
             
             <!-- Canvas Container -->
-            <div id="blog-guti-canvas" style="width: 420px; height: 420px; border-radius: 12px; overflow: hidden; border: 1px solid var(--news-border); position: relative; background: #1a120b;"></div>
+            <div id="blog-guti-canvas" style="width: 100%; max-width: 420px; height: 420px; border-radius: 12px; overflow: hidden; border: 1px solid var(--news-border); position: relative; background: #1a120b;"></div>
 
             <!-- Controls Panel -->
             <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 1rem; padding: 0.5rem;">

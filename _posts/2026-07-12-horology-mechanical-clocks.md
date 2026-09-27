@@ -67,7 +67,7 @@ The negative sign indicates that the meshed gears rotate in **opposite direction
         <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: flex-start; text-align: left;">
             
             <!-- Canvas Container -->
-            <div id="blog-clock-canvas" style="width: 420px; height: 420px; border-radius: 12px; overflow: hidden; border: 1px solid var(--news-border); position: relative; background: #181410;"></div>
+            <div id="blog-clock-canvas" style="width: 100%; max-width: 420px; height: 420px; border-radius: 12px; overflow: hidden; border: 1px solid var(--news-border); position: relative; background: #181410;"></div>
 
             <!-- Controls Panel -->
             <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 1rem; padding: 0.5rem;">

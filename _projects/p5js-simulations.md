@@ -17,14 +17,18 @@ Modern web browsers are capable of running complex scientific computations and d
 
 The suite includes several high-fidelity simulation engines:
 
-1. **MIMO Beamforming Array**: Visualizes constructive and destructive superposition of radio frequency (RF) wavefronts from multiple antenna elements with adjustable phase delays.
-2. **Grand Tour Gravity Slingshot**: Simulates spacecraft planetary flybys, kinetic energy transfers, and gravitational pull using Runge-Kutta 4th Order (RK4) integration.
-3. **Conformal Grid Warper**: Maps complex analysis holomorphic transformations (such as $z^2$, $e^z$, and $\sin(z)$) while preserving intersection angles on the complex plane.
-4. **Quantum Tunneling Transistor**: Computes Schrödinger probability wave packet decay and transmission coefficients through sub-nanometer potential barriers.
-5. **RF Signal Modulation (QAM)**: Simulates cell link capacity, constellations, and Bit Error Rates (BER) under additive white Gaussian noise (AWGN).
-6. **Coriolis Space Habitat**: Compares straight-line trajectories in inertial frames side-by-side with fictitious force curvature in rotating reference cylinders.
-7. **Kessler Debris Cascade**: Models orbital decay and collision chain-reactions of Keplerian satellite fragments in Low Earth Orbit (LEO).
-8. **Strange Attractors (Lorenz 3D)**: Visualizes phase-space divergence and chaos theory using 3D differential equations.
+1. **Black Hole Gravitational Lensing**: Deflects photon null geodesics around a Schwarzschild black hole, rendering unstable photon spheres and warped accretion disk halos.
+2. **Double Pendulum Lagrangian Chaos**: Solves non-linear coupled Euler-Lagrange equations to demonstrate exponential trajectory divergence and deterministic chaos.
+3. **Quantum Tunneling Transistor**: Computes Schrödinger probability wave packet decay and transmission coefficients through sub-nanometer potential barriers in modern semiconductors.
+4. **Chladni Resonance Plates**: Simulates standing acoustic wave interference and particle gradient descent in 2D biharmonic vibrating plates.
+5. **Turing Morphogenesis**: Integrates Gray-Scott reaction-diffusion PDEs ($u, v$) to model spontaneous symmetry breaking, leopard spots, and zebra stripes.
+6. **MIMO Beamforming Array**: Visualizes constructive and destructive superposition of radio frequency (RF) wavefronts from multiple antenna elements with adjustable phase delays.
+7. **Grand Tour Gravity Slingshot**: Simulates spacecraft planetary flybys, kinetic energy transfers, and gravitational pull using Runge-Kutta 4th Order (RK4) integration.
+8. **Conformal Grid Warper**: Maps complex analysis holomorphic transformations (such as $z^2$, $e^z$, and $\sin(z)$) while preserving intersection angles on the complex plane.
+9. **RF Signal Modulation (QAM)**: Simulates cell link capacity, constellations, and Bit Error Rates (BER) under additive white Gaussian noise (AWGN).
+10. **Coriolis Space Habitat**: Compares straight-line trajectories in inertial frames side-by-side with fictitious force curvature in rotating reference cylinders.
+11. **Kessler Debris Cascade**: Models orbital decay and collision chain-reactions of Keplerian satellite fragments in Low Earth Orbit (LEO).
+12. **Strange Attractors (Lorenz 3D)**: Visualizes phase-space divergence and chaos theory using 3D differential equations.
 
 ## Technical Implementation
 

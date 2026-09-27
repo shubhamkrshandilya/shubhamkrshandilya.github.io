@@ -80,7 +80,7 @@ $$\text{Shadow}_{\text{Blur}} = \text{Glow}, \quad \text{Shadow}_{\text{Color}} 
         <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: flex-start; text-align: left;">
             
             <!-- Canvas Container -->
-            <div id="blog-digital-canvas" style="width: 420px; height: 320px; border-radius: 12px; overflow: hidden; border: 1px solid var(--news-border); position: relative; background: #07090e;"></div>
+            <div id="blog-digital-canvas" style="width: 100%; max-width: 420px; height: 320px; border-radius: 12px; overflow: hidden; border: 1px solid var(--news-border); position: relative; background: #07090e;"></div>
 
             <!-- Controls Panel -->
             <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 1rem; padding: 0.5rem;">
