@@ -121,7 +121,7 @@ Even in the absolute worst-case scenario, an AVL tree is at most **44% taller th
                 
                 <!-- Input and Insert -->
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <input type="number" id="avl-node-input" placeholder="Val (1-99)" min="1" max="99" style="width: 110px; padding: 0.45rem 0.65rem; font-family: 'Courier Prime', monospace; border: 1px solid var(--news-border); background: var(--news-bg); color: var(--news-ink); border-radius: 4px; font-size: 0.95rem; outline: none;">
+                    <input type="number" id="avl-node-input" placeholder="Val (0-99)" min="0" max="99" style="width: 110px; padding: 0.45rem 0.65rem; font-family: 'Courier Prime', monospace; border: 1px solid var(--news-border); background: var(--news-bg); color: var(--news-ink); border-radius: 4px; font-size: 0.95rem; outline: none;">
                     <button id="avl-insert-btn" style="padding: 0.5rem 1.15rem; font-family: 'Playfair Display', serif; font-weight: bold; background: var(--news-ink); color: var(--news-bg); border: 1px solid var(--news-border); border-radius: 4px; cursor: pointer; transition: all 0.2s;">
                         ➕ Insert Key
                     </button>
@@ -202,7 +202,7 @@ const avlSketch = (p) => {
         if (insertBtn && inputEl) {
             insertBtn.addEventListener('click', () => {
                 let val = parseInt(inputEl.value);
-                if (!isNaN(val) && val >= 1 && val <= 99) {
+                if (!isNaN(val) && val >= 0 && val <= 99) {
                     insertVal(val);
                     inputEl.value = "";
                 }
@@ -210,7 +210,7 @@ const avlSketch = (p) => {
             inputEl.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     let val = parseInt(inputEl.value);
-                    if (!isNaN(val) && val >= 1 && val <= 99) {
+                    if (!isNaN(val) && val >= 0 && val <= 99) {
                         insertVal(val);
                         inputEl.value = "";
                     }
@@ -300,10 +300,8 @@ const avlSketch = (p) => {
 
         if (key < node.key) {
             node.left = insert(node.left, key);
-        } else if (key > node.key) {
-            node.right = insert(node.right, key);
         } else {
-            return node; // Duplicate keys not allowed
+            node.right = insert(node.right, key);
         }
 
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
@@ -315,12 +313,12 @@ const avlSketch = (p) => {
         }
 
         // Case 2: Right-Right
-        if (balance < -1 && key > node.right.key) {
+        if (balance < -1 && key >= node.right.key) {
             return leftRotate(node);
         }
 
         // Case 3: Left-Right
-        if (balance > 1 && key > node.left.key) {
+        if (balance > 1 && key >= node.left.key) {
             lastRotation = "Double LR Rotation";
             node.left = leftRotate(node.left);
             return rightRotate(node);
