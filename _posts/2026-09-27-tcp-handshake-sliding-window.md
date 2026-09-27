@@ -9,7 +9,7 @@ division: "Computer Science"
 author: "Shubham Kumar"
 volume: "I"
 issue: "24"
-date: 2026-09-27 21:00:00 +0530
+date: 2026-09-27 22:30:00 +0530
 tags: [Computer Science, Networking, TCP/IP, Protocols, Flow Control, p5.js, Education]
 weather: "Packets streaming through IP routers with adaptive sliding window byte buffer tracking"
 ticker_index: "TCP: SYN -> SYN-ACK -> ACK | Sliding Window: rwnd buffer tracking | Cumulative ACKs prevent receiver overrun"

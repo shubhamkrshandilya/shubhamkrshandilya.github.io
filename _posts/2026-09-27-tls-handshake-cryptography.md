@@ -9,7 +9,7 @@ division: "Computer Science"
 author: "Shubham Kumar"
 volume: "I"
 issue: "20"
-date: 2026-09-27 20:00:00 +0530
+date: 2026-09-27 22:00:00 +0530
 tags: [Computer Science, Networking, Cryptography, Security, TLS, p5.js, Education]
 weather: "ECDHE key exchange negotiating symmetric AES-256 session over public fiber"
 ticker_index: "TLS 1.3: 1-RTT handshake | TLS 1.2: 2-RTT legacy | Diffie-Hellman: S = g^(ab) mod p | Perfect Forward Secrecy"
